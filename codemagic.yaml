@@ -1,17 +1,24 @@
 workflows:
   android-release:
-    name: بناء تطبيق ديون البقالة
+    name: Build Android APK
     max_build_duration: 30
     instance_type: linux_x2
     environment:
       flutter: stable
     scripts:
-      - name: تحميل المكتبات
-        script: flutter pub get
-      - name: إنشاء ملفات Android
+      - name: Check files
         script: |
-          flutter create --platforms=android --org com.bakala .
-      - name: بناء APK
+          echo "=== Files in repo ==="
+          ls -la
+          echo "=== Flutter version ==="
+          flutter --version
+      - name: Create Android platform
+        script: |
+          flutter create --platforms=android --org com.bakala --project-name bakala_debts .
+          ls -la android/
+      - name: Get dependencies
+        script: flutter pub get
+      - name: Build APK
         script: flutter build apk --release
     artifacts:
       - build/app/outputs/flutter-apk/*.apk
