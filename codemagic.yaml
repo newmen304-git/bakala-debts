@@ -5,12 +5,12 @@ workflows:
     instance_type: linux_x2
     environment:
       flutter: stable
-    cache:
-      cache_paths:
-        - ~/.pub-cache
     scripts:
       - name: تحميل المكتبات
         script: flutter pub get
+      - name: إنشاء ملفات Android
+        script: |
+          flutter create --platforms=android --org com.bakala .
       - name: بناء APK
         script: flutter build apk --release
     artifacts:
